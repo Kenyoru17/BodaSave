@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BodaSave · Savings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="trips.html">Update Trip</a></li>
+        <li><a href="expenses.html">Expenses</a></li>
+        <li><a href="savings.html" class="active">Savings</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </nav>
+
+    <main class="content">
+      <header class="topbar">
+        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <div class="welcome">Savings</div>
+      </header>
+
+      <section>
+        <h2>Record a Savings Entry</h2>
+        <form id="saveForm" class="form-compact">
+          <div class="field"><input id="saveDate" type="date"></div>
+          <div class="field"><input id="saveAmount" type="number" placeholder="Amount saved (KES)"></div>
+          <div class="field">
+            <select id="saveGoalSelect">
+              <option value="">Choose goal (optional)</option>
+              <option>Emergency Fund</option>
+              <option>New Helmet</option>
+              <option>Tyres</option>
+            </select>
+          </div>
+          <div class="field"><input id="saveNote" type="text" placeholder="Note (optional)"></div>
+          <div class="actions"><button id="saveManualBtn" class="btn primary" type="button">Add Saving</button></div>
+        </form>
+
+        <h3>Saved Entries</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Amount</th><th>Goal</th><th>Note</th></tr></thead>
+          <tbody id="savingsManualBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      ensureAuth();
+      initSidebar();
+      document.getElementById('saveDate').value = new Date().toISOString().slice(0,10);
+      renderSavingsManual();
+      document.getElementById('saveManualBtn').addEventListener('click', saveManualSaving);
+    });
+  </script>
+</body>
+</html>

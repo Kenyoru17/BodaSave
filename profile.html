@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BodaSave · Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="trips.html">Update Trip</a></li>
+        <li><a href="expenses.html">Expenses</a></li>
+        <li><a href="savings.html">Savings</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="profile.html" class="active">Profile</a></li>
+      </ul>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </nav>
+
+    <main class="content">
+      <header class="topbar">
+        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <div class="welcome">Profile & Settings</div>
+      </header>
+
+      <section>
+        <h2>Your Profile</h2>
+        <p><strong>Name:</strong> <span id="profileName"></span></p>
+        <p><strong>Username:</strong> <span id="profileUser"></span></p>
+        <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+        <p><strong>Stage/Sacco:</strong> <span id="profileStage"></span></p>
+        <p><strong>Date Joined:</strong> <span id="profileJoined"></span></p>
+
+        <h3>Export / Manage Data</h3>
+        <button id="exportCsv" class="btn primary">Export data as CSV</button>
+        <button id="clearData" class="btn ghost">Clear all my data</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      ensureAuth();
+      initSidebar();
+      renderProfile();
+      document.getElementById('exportCsv').addEventListener('click', exportCSV);
+      document.getElementById('clearData').addEventListener('click', clearUserData);
+    });
+  </script>
+</body>
+</html>

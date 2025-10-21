@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BodaSave · Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- sidebar + content layout -->
+  <div class="app">
+    <nav class="sidebar">
+      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+      <ul>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="trips.html">Update Trip</a></li>
+        <li><a href="expenses.html">Expenses</a></li>
+        <li><a href="savings.html">Savings</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </nav>
+
+    <main class="content">
+      <header class="topbar">
+        <button id="menuBtn" class="hamburger" aria-label="menu">&#9776;</button>
+        <div class="welcome">Welcome, <span id="userName"></span></div>
+      </header>
+
+      <section id="dashboardContent">
+        <h2>Overview</h2>
+
+        <div class="cards">
+          <div class="card-small">
+            <h3>Total Earnings (Today)</h3>
+            <p id="earnToday">KES 0</p>
+          </div>
+          <div class="card-small">
+            <h3>Total Expenses (Today)</h3>
+            <p id="expToday">KES 0</p>
+          </div>
+          <div class="card-small">
+            <h3>Net Savings (Today)</h3>
+            <p id="netToday">KES 0</p>
+          </div>
+        </div>
+
+        <div class="goal-box">
+          <h3>Goal Progress</h3>
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <p>Progress: <span id="progressPercent">0%</span></p>
+          <p>Goal: KES <span id="currentGoal">0</span></p>
+        </div>
+
+        <div class="last-trip">
+          <h3>Last Trip Summary</h3>
+          <p id="lastTrip">No trips recorded yet.</p>
+        </div>
+
+        <div class="tip">
+          <strong>Daily Tip:</strong> <span id="dailyTip">Every trip counts. Save a little, grow a lot.</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      ensureAuth(); // redirect if not logged in
+      initSidebar();
+      renderDashboardPage();
+    });
+  </script>
+</body>
+</html>
