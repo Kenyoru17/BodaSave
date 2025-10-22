@@ -4,44 +4,157 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BodaSave · Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    /* small overrides specifically for login page to keep card centered */
-    body { background: linear-gradient(135deg,#2e8b57,#6fbf73); display:flex; align-items:center; justify-content:center; padding:24px; }
-    .auth-card { width:380px; max-width:94%; background:#fff; border-radius:16px; padding:32px; box-shadow:var(--shadow); text-align:center; }
-    .auth-card h1 { font-family:'Montserrat',sans-serif; color:var(--green-700); font-size:42px; margin:0 0 6px; }
-    .quote { color:#374151; font-style:italic; margin-bottom:12px; }
-    .auth-card input { text-align:center; }
-    .small-text { margin-top:12px; }
+    :root {
+      --green-700:#1f5c07;
+      --green-600:#2e8b57;
+      --muted:#6b7280;
+      --bg:linear-gradient(135deg,#2e8b57,#6fbf73);
+      --white:#ffffff;
+    }
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      height:100vh;
+      background:var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Poppins', sans-serif;
+      color:#0f172a;
+    }
+
+    .card {
+      width:370px;
+      background:var(--white);
+      border-radius:20px;
+      padding:40px 30px;
+      box-shadow:0 12px 32px rgba(0,0,0,0.12);
+      text-align:center;
+      transition:all .3s ease;
+    }
+
+    .brand h1 {
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      font-weight:800;
+      font-size:42px;
+      color:var(--green-700);
+    }
+
+    .lead-quote {
+      margin:10px 0 18px;
+      color:#374151;
+      font-size:14px;
+      font-style:italic;
+    }
+
+    input {
+      width:100%;
+      padding:12px 14px;
+      margin:8px 0;
+      border:1px solid #d1d5db;
+      border-radius:10px;
+      font-size:15px;
+      text-align:center;
+      background:#f9fafb;
+      transition:border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline:none;
+      border-color:var(--green-600);
+      box-shadow:0 0 0 3px rgba(46,139,87,0.2);
+    }
+
+    .btn {
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      margin-top:12px;
+      font-weight:600;
+      font-size:16px;
+      cursor:pointer;
+      transition:background 0.3s ease;
+    }
+
+    .btn.primary {
+      background:linear-gradient(180deg,var(--green-600),var(--green-700));
+      color:white;
+      box-shadow:0 6px 14px rgba(39,91,24,0.2);
+    }
+
+    .btn.primary:hover {
+      background:linear-gradient(180deg,#308f5c,#236a42);
+    }
+
+    .btn.ghost {
+      background:transparent;
+      border:1px solid #ccc;
+      color:#111;
+    }
+
+    .small-text {
+      margin-top:14px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .small-text a {
+      color:var(--green-700);
+      font-weight:600;
+      text-decoration:none;
+    }
+
+    .small-text a:hover {
+      text-decoration:underline;
+    }
+
     .hidden { display:none; }
+
+    @media(max-width:420px){
+      .card { width:90%; padding:30px 20px; }
+      .brand h1 { font-size:36px; }
+    }
   </style>
 </head>
 <body>
-  <div class="auth-card" id="loginCard">
-    <h1>BodaSave</h1>
-    <div class="quote">"Every trip counts. Save a little, grow a lot."</div>
 
-    <input id="loginUsername" type="text" placeholder="Username" />
-    <input id="loginPassword" type="password" placeholder="Password" />
-    <button id="loginBtn" class="btn primary" style="margin-top:12px;">Login</button>
+  <!-- LOGIN CARD -->
+  <div class="card" id="loginCard">
+    <div class="brand">
+      <h1>BodaSave</h1>
+      <div class="lead-quote">"Every trip counts. Save a little, grow a lot."</div>
+    </div>
 
-    <div class="small-text">Don't have an account? <a href="#" id="openSignup">Sign Up</a></div>
+    <input id="loginUsername" type="text" placeholder="Username" autocomplete="username">
+    <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="loginBtn" class="btn primary">Login</button>
+
+    <div class="small-text">Don’t have an account? <a href="#" id="openSignup">Sign Up</a></div>
   </div>
 
-  <!-- Signup card (hidden by default) -->
-  <div class="auth-card hidden" id="signupCard" style="margin-left:16px">
-    <h1 style="font-size:28px">Create Account</h1>
-    <div class="quote">Start saving today — one trip at a time.</div>
+  <!-- SIGNUP CARD -->
+  <div class="card hidden" id="signupCard">
+    <div class="brand">
+      <h1>Create Account</h1>
+      <div class="lead-quote">Start saving today — one trip at a time.</div>
+    </div>
 
-    <input id="fullName" type="text" placeholder="Full name" />
-    <input id="signupUsername" type="text" placeholder="Choose a username" />
-    <input id="phoneNumber" type="tel" placeholder="Phone number (optional)" />
-    <input id="stageName" type="text" placeholder="Stage / SACCO (optional)" />
-    <input id="signupPassword" type="password" placeholder="Choose a password" />
+    <input id="fullName" type="text" placeholder="Full name">
+    <input id="signupUsername" type="text" placeholder="Choose a username">
+    <input id="phoneNumber" type="tel" placeholder="Phone number (optional)">
+    <input id="stageName" type="text" placeholder="Stage / SACCO (optional)">
+    <input id="signupPassword" type="password" placeholder="Choose a password">
 
-    <button id="signupBtn" class="btn primary" style="margin-top:12px;">Create Account</button>
-    <button id="cancelSignup" class="btn ghost" style="margin-top:8px;">Back to Login</button>
+    <button id="signupBtn" class="btn primary">Create Account</button>
+    <button id="cancelSignup" class="btn ghost">Back to Login</button>
   </div>
 
   <script src="script.js" defer></script>
