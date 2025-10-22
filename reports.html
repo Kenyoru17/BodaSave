@@ -11,20 +11,20 @@
     <nav class="sidebar">
       <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html" class="active">Reports</a></li>
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="dashboard.html">🏠 Home</a></li>
+        <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="expenses.html">💸 Expenses</a></li>
+        <li><a href="savings.html">💰 Savings</a></li>
+        <li><a href="goals.html">🎯 Goals</a></li>
+        <li><a href="reports.html" class="active">📊 Reports</a></li>
+        <li><a href="profile.html">👤 Profile</a></li>
       </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
+      <button id="logoutBtn" class="small ghost">Logout</button>
     </nav>
 
     <main class="content">
       <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <button class="hamburger">&#9776;</button>
         <div class="welcome">Reports & Insights</div>
       </header>
 
@@ -34,7 +34,7 @@
         <p><strong>Total Spent:</strong> KES <span id="reportSpent">0</span></p>
         <p><strong>Total Saved:</strong> KES <span id="reportSaved">0</span></p>
 
-        <h3>Monthly Summary (Recent entries)</h3>
+        <h3>Recent Transactions</h3>
         <table>
           <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead>
           <tbody id="reportBody"></tbody>
