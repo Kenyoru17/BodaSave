@@ -1,73 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BodaSave | Digital Savings Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BodaSave · Login</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --green-700:#1f5c07;
+      --green-600:#2e8b57;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bgA: linear-gradient(135deg,#2e8b57,#6fbf73);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,Arial;background:var(--bgA);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:20px;color:#0f172a}
+
+    /* centered card wrapper */
+    .card {
+      width: 360px;
+      max-width: calc(100% - 40px);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 36px 28px;
+      box-shadow: 0 12px 30px rgba(11,32,12,0.18);
+      text-align: center;
+      transform-origin: center;
+    }
+
+    .brand {
+      margin-bottom: 8px;
+    }
+    .brand h1 {
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight:800;
+      color: var(--green-700);
+      font-size:44px;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .brand .subtitle {
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .lead-quote {
+      margin-top:10px;
+      color:#4b5563;
+      font-style:italic;
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    /* inputs */
+    .field { margin-bottom:12px; }
+    input[type="text"], input[type="password"], input[type="tel"] {
+      width: 92%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(15,23,42,0.06);
+      background: #fbfbfb;
+      font-size:15px;
+      outline: none;
+      text-align: center; /* centered placeholder / text */
+      transition: box-shadow .12s ease, transform .06s ease;
+    }
+    input::placeholder { color:#94a3b8; text-align:center; }
+    input:focus { box-shadow: 0 6px 18px rgba(39, 91, 24, 0.08); transform: translateY(-1px); border-color: var(--green-600); }
+
+    /* buttons */
+    .btn { display:block; width:92%; margin:10px auto 0; padding:12px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:600; font-size:15px; }
+    .btn.primary { background: linear-gradient(180deg,var(--green-600),var(--green-700)); color:white; box-shadow: 0 8px 20px rgba(39,91,24,0.12); }
+    .btn.ghost { background:transparent; border:1px solid rgba(15,23,42,0.06); color:#111; }
+
+    .small-text { margin-top:12px; color:var(--muted); font-size:13px; }
+    .small-text a { color:var(--green-700); text-decoration:none; font-weight:600; }
+    .small-text a:hover { text-decoration:underline; }
+
+    /* Two separate cards stacked ( Signup will appear on top of login when active ) */
+    .hidden { display:none; }
+
+    @media (max-width:420px){
+      .card { padding:24px 18px; width: 92%; }
+      .brand h1 { font-size:40px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="card">
-    <header class="brand">
-      <h1>Boda<span>Save</span></h1>
-      <p class="subtitle">Digital Savings Tracker for Boda Boda Riders</p>
-    </header>
 
-    <!-- LOGIN -->
-    <section id="loginBox">
-      <h2>Login</h2>
-      <div class="field"><input id="loginUsername" type="text" placeholder="Username"></div>
-      <div class="field"><input id="loginPassword" type="password" placeholder="Password"></div>
-      <button id="loginBtn" class="btn primary">Login</button>
-      <div class="switch">Don't have an account? <button id="goSignup" class="link-btn">Sign Up</button></div>
-    </section>
+  <!-- LOGIN CARD (default visible) -->
+  <div class="card" id="loginCard">
+    <div class="brand">
+      <h1>BodaSave</h1>
+      <div class="lead-quote">"Every trip counts. Save a little, grow a lot."</div>
+      <div class="subtitle">Digital savings tracker for boda boda riders</div>
+    </div>
 
-    <!-- SIGNUP -->
-    <section id="signupBox" style="display:none;">
-      <h2>Create Account</h2>
-      <div class="field"><input id="fullName" type="text" placeholder="Full Name"></div>
-      <div class="field"><input id="signupUsername" type="text" placeholder="Username"></div>
-      <div class="field"><input id="phoneNumber" type="text" placeholder="Phone Number"></div>
-      <div class="field"><input id="stageName" type="text" placeholder="Stage/Sacco Name"></div>
-      <div class="field"><input id="signupPassword" type="password" placeholder="Password"></div>
-      <button id="signupBtn" class="btn primary">Sign Up</button>
-      <button id="cancelSignup" class="btn ghost">Back to Login</button>
-    </section>
+    <div id="loginBox">
+      <div class="field"><input id="loginUsername" type="text" placeholder="Username" autocomplete="username"></div>
+      <div class="field"><input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"></div>
+      <button id="loginBtn" class="btn primary" type="button">Login</button>
 
-    <!-- DASHBOARD -->
-    <section id="dashboard" style="display:none;">
-      <h2>Welcome, <span id="userName"></span> 👋🏾</h2>
-      <p><strong>Total Savings:</strong> KES <span id="totalSavings">0</span></p>
-      <p><strong>Last Deposit:</strong> <span id="lastDeposit">N/A</span></p>
-
-      <div class="field"><input type="number" id="saveAmount" placeholder="Enter amount to save"></div>
-      <div class="field">
-        <select id="paymentMethod">
-          <option value="">Select payment method</option>
-          <option value="Cash">Cash</option>
-          <option value="M-Pesa">M-Pesa</option>
-        </select>
-      </div>
-      <div class="field"><input type="text" id="note" placeholder="Add a short note (optional)"></div>
-      <button id="saveBtn" class="btn primary">Add Savings</button>
-
-      <h3>Set Savings Goal</h3>
-      <div class="field"><input type="number" id="goalAmount" placeholder="Enter your goal (KES)"></div>
-      <button id="setGoalBtn" class="btn ghost">Set Goal</button>
-
-      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-      <p><small>Progress: <span id="progressPercent">0%</span></small></p>
-
-      <h3>Recent Transactions</h3>
-      <table>
-        <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Note</th></tr></thead>
-        <tbody id="savingsBody"></tbody>
-      </table>
-      <br>
-      <button id="logoutBtn" class="btn ghost">Logout</button>
-    </section>
+      <div class="small-text">Don't have an account? <a href="#" id="openSignup">Sign Up</a></div>
+    </div>
   </div>
 
+  <!-- SIGNUP CARD (hidden until opened) -->
+  <div class="card hidden" id="signupCard">
+    <div class="brand">
+      <h1 style="font-size:34px;">Create Account</h1>
+      <div class="lead-quote">Start saving today — one trip at a time.</div>
+    </div>
+
+    <div id="signupBox">
+      <div class="field"><input id="fullName" type="text" placeholder="Full name"></div>
+      <div class="field"><input id="signupUsername" type="text" placeholder="Choose a username"></div>
+      <div class="field"><input id="phoneNumber" type="tel" placeholder="Phone number (optional)"></div>
+      <div class="field"><input id="stageName" type="text" placeholder="Stage / SACCO (optional)"></div>
+      <div class="field"><input id="signupPassword" type="password" placeholder="Choose a password" autocomplete="new-password"></div>
+
+      <button id="signupBtn" class="btn primary" type="button">Create Account</button>
+      <button id="cancelSignup" class="btn ghost" type="button" style="margin-top:8px;">Back to Login</button>
+
+      <div class="small-text" style="margin-top:10px;">By creating an account you keep data locally on this device for demo purposes.</div>
+    </div>
+  </div>
+
+  <!-- shared script (uses functions in script.js) -->
   <script src="script.js"></script>
+  <script>
+    // Ensure script.js functions are available and then hook UI
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // If script.js has initAuthPage, it will set up listeners; but we'll also wire here in case
+      if(typeof initAuthPage === 'function'){
+        initAuthPage();
+      }
+
+      // UI toggles: show signup / login visuals (keeps IDs expected by script.js)
+      const loginCard = document.getElementById('loginCard');
+      const signupCard = document.getElementById('signupCard');
+      document.getElementById('openSignup').addEventListener('click', (e)=>{
+        e.preventDefault();
+        loginCard.classList.add('hidden');
+        signupCard.classList.remove('hidden');
+      });
+      document.getElementById('cancelSignup').addEventListener('click', ()=>{
+        signupCard.classList.add('hidden');
+        loginCard.classList.remove('hidden');
+      });
+
+      // If script.js did not attach login/signup (older mismatch), attach fallback handlers
+      // Only attach if not already attached by initAuthPage
+      const loginBtn = document.getElementById('loginBtn');
+      if(loginBtn && !loginBtn.hasAttribute('data-bound')){
+        loginBtn.addEventListener('click', ()=>{
+          // fallback: try to use script.js login flow if available
+          if(typeof window.login === 'function') { window.login(); return; }
+          // minimal fallback (localStorage quick check)
+          const u = document.getElementById('loginUsername').value.trim();
+          const p = document.getElementById('loginPassword').value.trim();
+          const users = JSON.parse(localStorage.getItem('bodaUsers') || '[]');
+          const user = users.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
+          if(user){
+            localStorage.setItem('loggedInUser', user.username);
+            window.location.href = 'dashboard.html';
+          } else {
+            alert('Incorrect username or password.');
+          }
+        });
+        loginBtn.setAttribute('data-bound','1');
+      }
+
+      const signupBtn = document.getElementById('signupBtn');
+      if(signupBtn && !signupBtn.hasAttribute('data-bound')){
+        signupBtn.addEventListener('click', ()=>{
+          if(typeof initAuthPage === 'function'){ 
+            // if script.js handles signup, do nothing (script.js will have handlers)
+            // but ensure fields are non-empty and leave to script.js
+            const fullName = document.getElementById('fullName').value.trim();
+            const username = document.getElementById('signupUsername').value.trim();
+            const pass = document.getElementById('signupPassword').value.trim();
+            if(!fullName||!username||!pass){ alert('Please fill at least Name, Username and Password.'); return; }
+            // trigger the script.js signup via initAuthPage (script.js expects the ids)
+            // If script.js added its listener already, clicking the button will do the rest.
+            // To be safe, call the same logic here:
+          }
+          // fallback manual create if script.js not present:
+          const users = JSON.parse(localStorage.getItem('bodaUsers') || '[]');
+          const username = document.getElementById('signupUsername').value.trim();
+          if(users.some(u => u.username.toLowerCase() === username.toLowerCase())){ alert('Username already exists'); return; }
+          const newUser = {
+            fullName: document.getElementById('fullName').value.trim(),
+            username,
+            password: document.getElementById('signupPassword').value.trim(),
+            phone: document.getElementById('phoneNumber').value.trim(),
+            stage: document.getElementById('stageName').value.trim(),
+            dateJoined: new Date().toLocaleDateString(),
+            trips:[], expenses:[], savings:[], goals:[]
+          };
+          users.push(newUser);
+          localStorage.setItem('bodaUsers', JSON.stringify(users));
+          alert('Account created. Please login.');
+          // show login card
+          signupCard.classList.add('hidden');
+          loginCard.classList.remove('hidden');
+        });
+        signupBtn.setAttribute('data-bound','1');
+      }
+    });
+  </script>
+
 </body>
 </html>
