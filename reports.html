@@ -11,34 +11,56 @@
     <nav class="sidebar">
       <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
       <ul>
-        <li><a href="dashboard.html">🏠 Home</a></li>
-        <li><a href="trips.html">🚦 Trips</a></li>
-        <li><a href="expenses.html">💸 Expenses</a></li>
-        <li><a href="savings.html">💰 Savings</a></li>
-        <li><a href="goals.html">🎯 Goals</a></li>
-        <li><a href="reports.html" class="active">📊 Reports</a></li>
-        <li><a href="profile.html">👤 Profile</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="expenses.html">Expenses</a></li>
+        <li><a href="savings.html">Savings</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="credits.html">Credits</a></li>
+        <li><a href="reports.html" class="active">Reports</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
-      <button id="logoutBtn" class="small ghost">Logout</button>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
     </nav>
 
     <main class="content">
       <header class="topbar">
-        <button class="hamburger">&#9776;</button>
+        <button id="menuBtn" class="hamburger">&#9776;</button>
         <div class="welcome">Reports & Insights</div>
       </header>
 
       <section>
-        <h2>Summary</h2>
-        <p><strong>Total Earned:</strong> KES <span id="reportEarned">0</span></p>
-        <p><strong>Total Spent:</strong> KES <span id="reportSpent">0</span></p>
-        <p><strong>Total Saved:</strong> KES <span id="reportSaved">0</span></p>
+        <h2>📊 Summary Overview</h2>
+        <div class="cards">
+          <div class="card-small">
+            <h3>Total Earned</h3>
+            <p id="reportEarned">KES 0</p>
+          </div>
+          <div class="card-small">
+            <h3>Total Spent</h3>
+            <p id="reportSpent">KES 0</p>
+          </div>
+          <div class="card-small">
+            <h3>Total Saved</h3>
+            <p id="reportSaved">KES 0</p>
+          </div>
+          <div class="card-small">
+            <h3>Unpaid Credits</h3>
+            <p id="reportCredits">KES 0</p>
+          </div>
+        </div>
 
         <h3>Recent Transactions</h3>
         <table>
-          <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead>
+          <thead>
+            <tr><th>Date</th><th>Type</th><th>Amount</th><th>Details</th></tr>
+          </thead>
           <tbody id="reportBody"></tbody>
         </table>
+
+        <div class="actions">
+          <button id="downloadCsv" class="btn primary">⬇️ Download Report (CSV)</button>
+        </div>
       </section>
     </main>
   </div>
@@ -49,6 +71,17 @@
       ensureAuth();
       initSidebar();
       renderReports();
+
+      document.getElementById('downloadCsv').addEventListener('click', ()=>{
+        const csv = generateReportCSV();
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'BodaSave_Report.csv';
+        link.click();
+        URL.revokeObjectURL(url);
+      });
     });
   </script>
 </body>
