@@ -1,78 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BodaSave · Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:'Poppins',sans-serif;background:#f8fdf8;color:#111;}
+    header{background:#2e8b57;color:#fff;padding:16px;text-align:center;font-size:20px;font-weight:600;}
+    .container{padding:20px;}
+    .card{background:#fff;border-radius:10px;padding:20px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+    .title{font-weight:600;margin-bottom:8px;}
+    .goal-bar{background:#e5e7eb;border-radius:8px;height:10px;overflow:hidden;}
+    .goal-bar div{background:#2e8b57;height:100%;transition:width .4s ease;}
+    nav{background:#e7f7ec;padding:10px;text-align:center;}
+    nav a{margin:0 8px;text-decoration:none;color:#2e8b57;font-weight:600;}
+  </style>
 </head>
-<body>
-  <!-- sidebar + content layout -->
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html" class="active">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
-    </nav>
+<body onload="ensureAuth();initSidebar();renderDashboardPage();">
 
-    <main class="content">
-      <header class="topbar">
-        <button id="menuBtn" class="hamburger" aria-label="menu">&#9776;</button>
-        <div class="welcome">Welcome, <span id="userName"></span></div>
-      </header>
+  <header>BodaSave Dashboard</header>
 
-      <section id="dashboardContent">
-        <h2>Overview</h2>
+  <nav>
+    <a href="dashboard.html">🏠 Home</a>
+    <a href="trips.html">🚦 Trips</a>
+    <a href="expenses.html">💸 Expenses</a>
+    <a href="savings.html">💰 Savings</a>
+    <a href="goals.html">🎯 Goals</a>
+    <a href="reports.html">📊 Reports</a>
+    <a href="profile.html">👤 Profile</a>
+  </nav>
 
-        <div class="cards">
-          <div class="card-small">
-            <h3>Total Earnings (Today)</h3>
-            <p id="earnToday">KES 0</p>
-          </div>
-          <div class="card-small">
-            <h3>Total Expenses (Today)</h3>
-            <p id="expToday">KES 0</p>
-          </div>
-          <div class="card-small">
-            <h3>Net Savings (Today)</h3>
-            <p id="netToday">KES 0</p>
-          </div>
-        </div>
-
-        <div class="goal-box">
-          <h3>Goal Progress</h3>
-          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-          <p>Progress: <span id="progressPercent">0%</span></p>
-          <p>Goal: KES <span id="currentGoal">0</span></p>
-        </div>
-
-        <div class="last-trip">
-          <h3>Last Trip Summary</h3>
-          <p id="lastTrip">No trips recorded yet.</p>
-        </div>
-
-        <div class="tip">
-          <strong>Daily Tip:</strong> <span id="dailyTip">Every trip counts. Save a little, grow a lot.</span>
-        </div>
-      </section>
-    </main>
+  <div class="container">
+    <div class="card">
+      <div class="title">Today's Earnings</div>
+      <p id="earnToday">KES 0</p>
+    </div>
+    <div class="card">
+      <div class="title">Today's Expenses</div>
+      <p id="expToday">KES 0</p>
+    </div>
+    <div class="card">
+      <div class="title">Net Savings</div>
+      <p id="netToday">KES 0</p>
+    </div>
+    <div class="card">
+      <div class="title">Goal Progress</div>
+      <div class="goal-bar"><div id="progressFill" style="width:0%"></div></div>
+      <p><span id="progressPercent">0%</span> towards KES <span id="currentGoal">0</span></p>
+    </div>
+    <div class="card">
+      <div class="title">Last Trip Summary</div>
+      <p id="lastTrip">No trips recorded yet.</p>
+    </div>
   </div>
 
   <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth(); // redirect if not logged in
-      initSidebar();
-      renderDashboardPage();
-    });
-  </script>
 </body>
 </html>
