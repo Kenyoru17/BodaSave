@@ -1,69 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Update Trip</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trips · BodaSave</title>
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#f8fdf8;margin:0;padding:20px;}
+    header{background:#2e8b57;color:#fff;text-align:center;padding:12px;font-weight:600;}
+    .field{margin:8px 0;}
+    input,select,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;}
+    button{background:#2e8b57;color:#fff;border:none;padding:10px 14px;border-radius:6px;margin-top:10px;cursor:pointer;}
+    table{width:100%;margin-top:20px;border-collapse:collapse;}
+    th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;}
+  </style>
 </head>
-<body>
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html" class="active">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
-    </nav>
+<body onload="ensureAuth();renderTrips();">
 
-    <main class="content">
-      <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
-        <div class="welcome">Update Trip</div>
-      </header>
+<header>🚦 Record a Trip</header>
 
-      <section>
-        <h2>Record Trip Earnings</h2>
-        <form id="tripForm" class="form-compact">
-          <div class="field"><input id="tripDate" type="datetime-local"></div>
-          <div class="field"><input id="tripAmount" type="number" placeholder="Amount earned (KES)"></div>
-          <div class="field"><input id="tripDetails" type="text" placeholder="Trip details (route)"></div>
-          <div class="field">
-            <select id="tripPayment">
-              <option value="">Payment method</option>
-              <option>Cash</option>
-              <option>M-Pesa</option>
-            </select>
-          </div>
-          <div class="field"><input id="tripNote" type="text" placeholder="Notes (optional)"></div>
-          <div class="actions"><button id="saveTripBtn" class="btn primary" type="button">Save Trip</button></div>
-        </form>
+<div class="field"><label>Date:</label><input id="tripDate" type="datetime-local"></div>
+<div class="field"><label>Amount Earned (KES):</label><input id="tripAmount" type="number"></div>
+<div class="field"><label>Trip Details:</label><input id="tripDetails" type="text"></div>
+<div class="field"><label>Payment Method:</label>
+<select id="tripPayment"><option>Cash</option><option>M-Pesa</option><option>Other</option></select></div>
+<div class="field"><label>Notes:</label><textarea id="tripNote"></textarea></div>
 
-        <h3>Today's Trips</h3>
-        <table>
-          <thead><tr><th>Time</th><th>Amount</th><th>Details</th><th>Method</th></tr></thead>
-          <tbody id="tripsBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+<button onclick="saveTrip()">Save Trip</button>
 
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth();
-      initSidebar();
-      // set default datetime to now
-      document.getElementById('tripDate').value = new Date().toISOString().slice(0,16);
-      renderTrips();
-      document.getElementById('saveTripBtn').addEventListener('click', saveTrip);
-    });
-  </script>
+<h3>Recent Trips</h3>
+<table>
+  <thead><tr><th>Date</th><th>Amount</th><th>Details</th><th>Payment</th></tr></thead>
+  <tbody id="tripsBody"></tbody>
+</table>
+
+<script src="script.js"></script>
 </body>
 </html>
