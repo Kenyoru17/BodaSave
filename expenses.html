@@ -1,70 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Expenses</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expenses · BodaSave</title>
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#f8fdf8;margin:0;padding:20px;}
+    header{background:#2e8b57;color:#fff;text-align:center;padding:12px;font-weight:600;}
+    .field{margin:8px 0;}
+    input,select,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;}
+    button{background:#2e8b57;color:#fff;border:none;padding:10px 14px;border-radius:6px;margin-top:10px;cursor:pointer;}
+    table{width:100%;margin-top:20px;border-collapse:collapse;}
+    th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;}
+  </style>
 </head>
-<body>
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html" class="active">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
-    </nav>
+<body onload="ensureAuth();renderExpenses();">
 
-    <main class="content">
-      <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
-        <div class="welcome">Expenses</div>
-      </header>
+<header>💸 Record Expense</header>
 
-      <section>
-        <h2>Record Expense</h2>
-        <form id="expenseForm" class="form-compact">
-          <div class="field"><input id="expenseDate" type="date"></div>
-          <div class="field">
-            <select id="expenseType">
-              <option value="">Select expense type</option>
-              <option>Fuel</option>
-              <option>Maintenance</option>
-              <option>Food</option>
-              <option>Loan repayment</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field"><input id="expenseAmount" type="number" placeholder="Amount (KES)"></div>
-          <div class="field"><input id="expenseNote" type="text" placeholder="Note (optional)"></div>
-          <div class="actions"><button id="saveExpenseBtn" class="btn primary" type="button">Save Expense</button></div>
-        </form>
+<div class="field"><label>Date:</label><input id="expenseDate" type="date"></div>
+<div class="field"><label>Expense Type:</label>
+<select id="expenseType">
+  <option>Fuel</option>
+  <option>Maintenance</option>
+  <option>Food</option>
+  <option>Loan Repayment</option>
+  <option>Other</option>
+</select>
+</div>
+<div class="field"><label>Amount (KES):</label><input id="expenseAmount" type="number"></div>
+<div class="field"><label>Notes:</label><textarea id="expenseNote"></textarea></div>
 
-        <h3>Recent Expenses</h3>
-        <table>
-          <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead>
-          <tbody id="expensesBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+<button onclick="saveExpense()">Save Expense</button>
 
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth();
-      initSidebar();
-      document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
-      renderExpenses();
-      document.getElementById('saveExpenseBtn').addEventListener('click', saveExpense);
-    });
-  </script>
+<h3>Recent Expenses</h3>
+<table>
+  <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead>
+  <tbody id="expensesBody"></tbody>
+</table>
+
+<script src="script.js"></script>
 </body>
 </html>
