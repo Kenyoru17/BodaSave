@@ -11,20 +11,20 @@
     <nav class="sidebar">
       <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="profile.html" class="active">Profile</a></li>
+        <li><a href="dashboard.html">🏠 Home</a></li>
+        <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="expenses.html">💸 Expenses</a></li>
+        <li><a href="savings.html">💰 Savings</a></li>
+        <li><a href="goals.html">🎯 Goals</a></li>
+        <li><a href="reports.html">📊 Reports</a></li>
+        <li><a href="profile.html" class="active">👤 Profile</a></li>
       </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
+      <button id="logoutBtn" class="small ghost">Logout</button>
     </nav>
 
     <main class="content">
       <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <button class="hamburger">&#9776;</button>
         <div class="welcome">Profile & Settings</div>
       </header>
 
@@ -37,8 +37,10 @@
         <p><strong>Date Joined:</strong> <span id="profileJoined"></span></p>
 
         <h3>Export / Manage Data</h3>
-        <button id="exportCsv" class="btn primary">Export data as CSV</button>
-        <button id="clearData" class="btn ghost">Clear all my data</button>
+        <div class="actions">
+          <button id="exportCsv" class="btn primary">Export data as CSV</button>
+          <button id="clearData" class="btn ghost">Clear all my data</button>
+        </div>
       </section>
     </main>
   </div>
