@@ -1,42 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Savings · BodaSave</title>
-  <style>
-    body{font-family:'Poppins',sans-serif;background:#f8fdf8;margin:0;padding:20px;}
-    header{background:#2e8b57;color:#fff;text-align:center;padding:12px;font-weight:600;}
-    .field{margin:8px 0;}
-    input,select,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;}
-    button{background:#2e8b57;color:#fff;border:none;padding:10px 14px;border-radius:6px;margin-top:10px;cursor:pointer;}
-    table{width:100%;margin-top:20px;border-collapse:collapse;}
-    th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;}
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body onload="ensureAuth();renderSavingsManual();">
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+      <ul>
+        <li><a href="dashboard.html">🏠 Home</a></li>
+        <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="expenses.html">💸 Expenses</a></li>
+        <li><a href="savings.html" class="active">💰 Savings</a></li>
+        <li><a href="goals.html">🎯 Goals</a></li>
+        <li><a href="reports.html">📊 Reports</a></li>
+        <li><a href="profile.html">👤 Profile</a></li>
+      </ul>
+      <button id="logoutBtn" class="small ghost">Logout</button>
+    </nav>
 
-<header>💰 Record Savings</header>
+    <main class="content">
+      <header class="topbar">
+        <button class="hamburger">&#9776;</button>
+        <div class="welcome">Record Savings</div>
+      </header>
 
-<div class="field"><label>Date:</label><input id="saveDate" type="date"></div>
-<div class="field"><label>Amount (KES):</label><input id="saveAmount" type="number"></div>
-<div class="field"><label>Goal:</label>
-<select id="saveGoalSelect">
-  <option>Emergency Fund</option>
-  <option>New Helmet</option>
-  <option>New Tyres</option>
-  <option>License Renewal</option>
-</select></div>
-<div class="field"><label>Notes:</label><textarea id="saveNote"></textarea></div>
+      <section>
+        <h2>Record a Savings Entry</h2>
+        <div class="form-compact">
+          <div class="field"><label>Date</label><input id="saveDate" type="date"></div>
+          <div class="field"><label>Amount (KES)</label><input id="saveAmount" type="number"></div>
+          <div class="field"><label>Goal</label>
+            <select id="saveGoalSelect">
+              <option>Emergency Fund</option>
+              <option>New Helmet</option>
+              <option>New Tyres</option>
+              <option>License Renewal</option>
+            </select>
+          </div>
+          <div class="field"><label>Notes</label><textarea id="saveNote" rows="2"></textarea></div>
+          <div class="actions"><button id="saveManualBtn" class="btn primary">Save</button></div>
+        </div>
 
-<button onclick="saveManualSaving()">Save</button>
+        <h3>Saved Entries</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Amount</th><th>Goal</th><th>Note</th></tr></thead>
+          <tbody id="savingsManualBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
 
-<h3>Recent Savings</h3>
-<table>
-  <thead><tr><th>Date</th><th>Amount</th><th>Goal</th><th>Note</th></tr></thead>
-  <tbody id="savingsManualBody"></tbody>
-</table>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      ensureAuth();
+      initSidebar();
+      renderSavingsManual();
+      const d = document.getElementById('saveDate');
+      if (d && !d.value) d.value = new Date().toISOString().slice(0,10);
+    });
+  </script>
 </body>
 </html>
