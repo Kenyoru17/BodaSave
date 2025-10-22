@@ -1,66 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Goals</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goals · BodaSave</title>
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#f8fdf8;margin:0;padding:20px;}
+    header{background:#2e8b57;color:#fff;text-align:center;padding:12px;font-weight:600;}
+    .field{margin:8px 0;}
+    input,select{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;}
+    button{background:#2e8b57;color:#fff;border:none;padding:10px 14px;border-radius:6px;margin-top:10px;cursor:pointer;}
+    table{width:100%;margin-top:20px;border-collapse:collapse;}
+    th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;}
+  </style>
 </head>
-<body>
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html" class="active">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
-    </nav>
+<body onload="ensureAuth();renderGoals();">
 
-    <main class="content">
-      <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
-        <div class="welcome">Goals</div>
-      </header>
+<header>🎯 Set a Goal</header>
 
-      <section>
-        <h2>Create a Goal</h2>
-        <form id="goalForm" class="form-compact">
-          <div class="field"><input id="goalName" type="text" placeholder="Goal name (e.g., New Tyres)"></div>
-          <div class="field"><input id="goalTarget" type="number" placeholder="Target amount (KES)"></div>
-          <div class="field"><input id="goalEnd" type="date"></div>
-          <div class="field">
-            <select id="goalPriority">
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
-            </select>
-          </div>
-          <div class="actions"><button id="saveGoalBtn" class="btn primary" type="button">Save Goal</button></div>
-        </form>
+<div class="field"><label>Goal Name:</label><input id="goalName" type="text"></div>
+<div class="field"><label>Target Amount (KES):</label><input id="goalTarget" type="number"></div>
+<div class="field"><label>End Date:</label><input id="goalEnd" type="date"></div>
+<div class="field"><label>Priority:</label>
+<select id="goalPriority">
+  <option>High</option><option>Medium</option><option>Low</option>
+</select></div>
 
-        <h3>Your Goals</h3>
-        <table>
-          <thead><tr><th>Name</th><th>Target</th><th>Progress</th><th>Status</th></tr></thead>
-          <tbody id="goalsBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+<button onclick="saveGoal()">Save Goal</button>
 
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth();
-      initSidebar();
-      renderGoals();
-      document.getElementById('saveGoalBtn').addEventListener('click', saveGoal);
-    });
-  </script>
+<h3>Current Goals</h3>
+<table>
+  <thead><tr><th>Name</th><th>Target</th><th>Progress</th><th>Status</th></tr></thead>
+  <tbody id="goalsBody"></tbody>
+</table>
+
+<script src="script.js"></script>
 </body>
 </html>
