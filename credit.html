@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Credits</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credits · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,44 +11,39 @@
     <nav class="sidebar">
       <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
       <ul>
-        <li><a href="dashboard.html">🏠 Home</a></li>
-        <li><a href="trips.html">🚦 Trips</a></li>
-        <li><a href="credits.html" class="active">💳 Credits</a></li>
-        <li><a href="expenses.html">💸 Expenses</a></li>
-        <li><a href="savings.html">💰 Savings</a></li>
-        <li><a href="goals.html">🎯 Goals</a></li>
-        <li><a href="reports.html">📊 Reports</a></li>
-        <li><a href="profile.html">👤 Profile</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="trips.html">Update Trip</a></li>
+        <li><a href="expenses.html">Expenses</a></li>
+        <li><a href="savings.html">Savings</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="credit.html" class="active">Credit</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
-      <button id="logoutBtn" class="small ghost">Logout</button>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
     </nav>
 
     <main class="content">
       <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Credits</div>
+        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <div class="welcome">Credit Records</div>
       </header>
 
       <section>
-        <h2>Credit Transactions</h2>
-
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">
-          <div style="flex:1;min-width:220px;background:#fbfff8;padding:10px;border-radius:10px;border:1px solid #eef7ee">
-            <strong>Unpaid Credits</strong>
-            <div id="creditsUnpaidAmt" style="font-weight:700;margin-top:8px">KES 0</div>
-          </div>
-          <div style="flex:1;min-width:220px;background:#fff8f5;padding:10px;border-radius:10px;border:1px solid #fff1ea">
-            <strong>Paid Credits (history)</strong>
-            <div id="creditsPaidAmt" style="font-weight:700;margin-top:8px">KES 0</div>
-          </div>
-        </div>
-
-        <h3>All Credits</h3>
+        <h2>Unpaid Credits</h2>
         <table>
           <thead>
-            <tr><th>Date</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th></tr>
+            <tr>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Trip Details</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
           </thead>
-          <tbody id="creditsBody"></tbody>
+          <tbody id="creditBody"></tbody>
         </table>
       </section>
     </main>
@@ -56,17 +51,11 @@
 
   <script src="script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
+    document.addEventListener('DOMContentLoaded', () => {
       ensureAuth();
       initSidebar();
-      // renderCredits() is in script.js
-      if (typeof renderCredits === 'function') renderCredits();
+      renderCredits(); // shows all unpaid credits
     });
-
-    // expose mark function to be callable from buttons inside the table (script.js defines markCreditPaid)
-    window.markCreditPaid = function(id){
-      if (typeof markCreditPaid === 'function') markCreditPaid(id);
-    };
   </script>
 </body>
 </html>
