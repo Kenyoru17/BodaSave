@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Trips · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* tiny local style to visually hide the credit customer block */
+    .credit-block { display:none; margin-top:8px; }
+    .credit-block.active { display:block; }
+    .inline-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -13,6 +19,7 @@
       <ul>
         <li><a href="dashboard.html">🏠 Home</a></li>
         <li><a href="trips.html" class="active">🚦 Trips</a></li>
+        <li><a href="credits.html">💳 Credits</a></li>
         <li><a href="expenses.html">💸 Expenses</a></li>
         <li><a href="savings.html">💰 Savings</a></li>
         <li><a href="goals.html">🎯 Goals</a></li>
@@ -35,8 +42,23 @@
           <div class="field"><label>Amount Earned (KES)</label><input id="tripAmount" type="number" placeholder="e.g., 200"></div>
           <div class="field"><label>Trip Details</label><input id="tripDetails" type="text" placeholder="Route or notes"></div>
           <div class="field"><label>Payment Method</label>
-            <select id="tripPayment"><option>Cash</option><option>M-Pesa</option><option>Other</option></select>
+            <select id="tripPayment">
+              <option>Cash</option>
+              <option>M-Pesa</option>
+              <option>Credit</option>
+              <option>Other</option>
+            </select>
           </div>
+
+          <!-- credit-specific fields (customer info) -->
+          <div id="creditBlock" class="credit-block">
+            <div class="inline-grid">
+              <div class="field"><label>Customer Name</label><input id="creditCustomer" type="text" placeholder="Customer name"></div>
+              <div class="field"><label>Customer Phone</label><input id="creditPhone" type="tel" placeholder="Phone number"></div>
+            </div>
+            <small style="display:block;margin-top:6px;color:#6b7280">Selecting Credit will create a credit record (unpaid) you can track in Credits.</small>
+          </div>
+
           <div class="field"><label>Notes</label><textarea id="tripNote" rows="2"></textarea></div>
           <div class="actions"><button id="saveTripBtn" class="btn primary">Save Trip</button></div>
         </div>
@@ -52,11 +74,23 @@
 
   <script src="script.js"></script>
   <script>
+    // small UI toggle for credit fields; uses the IDs script.js expects (creditCustomer, creditPhone)
     document.addEventListener('DOMContentLoaded', ()=>{
+      // ensure auth + sidebar from shared script
       ensureAuth();
       initSidebar();
       renderTrips();
-      // set default date to now for convenience
+      const payment = document.getElementById('tripPayment');
+      const block = document.getElementById('creditBlock');
+      if(payment && block){
+        function update(){
+          if(payment.value === 'Credit') block.classList.add('active');
+          else block.classList.remove('active');
+        }
+        payment.addEventListener('change', update);
+        update();
+      }
+      // default trip date to now
       const d = document.getElementById('tripDate');
       if (d && !d.value) d.value = new Date().toISOString().slice(0,16);
     });
