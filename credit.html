@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Credits · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,26 +11,26 @@
     <nav class="sidebar">
       <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="trips.html">Update Trip</a></li>
-        <li><a href="expenses.html">Expenses</a></li>
-        <li><a href="savings.html">Savings</a></li>
-        <li><a href="goals.html">Goals</a></li>
-        <li><a href="reports.html">Reports</a></li>
-        <li><a href="credit.html" class="active">Credit</a></li>
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="dashboard.html">🏠 Home</a></li>
+        <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="credit.html" class="active">💳 Credit</a></li>
+        <li><a href="expenses.html">💸 Expenses</a></li>
+        <li><a href="savings.html">💰 Savings</a></li>
+        <li><a href="goals.html">🎯 Goals</a></li>
+        <li><a href="reports.html">📊 Reports</a></li>
+        <li><a href="profile.html">👤 Profile</a></li>
       </ul>
-      <button id="logoutBtn" class="btn ghost small">Logout</button>
+      <button id="logoutBtn" class="small ghost">Logout</button>
     </nav>
 
     <main class="content">
       <header class="topbar">
-        <button id="menuBtn" class="hamburger">&#9776;</button>
+        <button class="hamburger">&#9776;</button>
         <div class="welcome">Credit Records</div>
       </header>
 
       <section>
-        <h2>Unpaid Credits</h2>
+        <h2>Credits (Unpaid / Paid)</h2>
         <table>
           <thead>
             <tr>
@@ -51,10 +51,10 @@
 
   <script src="script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', ()=>{
       ensureAuth();
       initSidebar();
-      renderCredits(); // shows all unpaid credits
+      renderCredits();
     });
   </script>
 </body>
