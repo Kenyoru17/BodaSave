@@ -13,6 +13,7 @@
       <ul>
         <li><a href="dashboard.html">🏠 Home</a></li>
         <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="credit.html">💳 Credit</a></li>
         <li><a href="expenses.html">💸 Expenses</a></li>
         <li><a href="savings.html">💰 Savings</a></li>
         <li><a href="goals.html">🎯 Goals</a></li>
@@ -23,10 +24,7 @@
     </nav>
 
     <main class="content">
-      <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Profile & Settings</div>
-      </header>
+      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Profile & Settings</div></header>
 
       <section>
         <h2>Your Profile</h2>
@@ -51,8 +49,10 @@
       ensureAuth();
       initSidebar();
       renderProfile();
-      document.getElementById('exportCsv').addEventListener('click', exportCSV);
-      document.getElementById('clearData').addEventListener('click', clearUserData);
+      const exportBtn = document.getElementById('exportCsv');
+      if (exportBtn) exportBtn.addEventListener('click', exportCSV);
+      const clearBtn = document.getElementById('clearData');
+      if (clearBtn) clearBtn.addEventListener('click', clearUserData);
     });
   </script>
 </body>
