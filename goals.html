@@ -13,6 +13,7 @@
       <ul>
         <li><a href="dashboard.html">🏠 Home</a></li>
         <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="credit.html">💳 Credit</a></li>
         <li><a href="expenses.html">💸 Expenses</a></li>
         <li><a href="savings.html">💰 Savings</a></li>
         <li><a href="goals.html" class="active">🎯 Goals</a></li>
@@ -23,10 +24,7 @@
     </nav>
 
     <main class="content">
-      <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Create a Goal</div>
-      </header>
+      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Create a Goal</div></header>
 
       <section>
         <h2>Create a Goal</h2>
@@ -55,6 +53,8 @@
       ensureAuth();
       initSidebar();
       renderGoals();
+      const btn = document.getElementById('saveGoalBtn');
+      if (btn) btn.addEventListener('click', saveGoal);
     });
   </script>
 </body>
