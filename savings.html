@@ -13,6 +13,7 @@
       <ul>
         <li><a href="dashboard.html">🏠 Home</a></li>
         <li><a href="trips.html">🚦 Trips</a></li>
+        <li><a href="credit.html">💳 Credit</a></li>
         <li><a href="expenses.html">💸 Expenses</a></li>
         <li><a href="savings.html" class="active">💰 Savings</a></li>
         <li><a href="goals.html">🎯 Goals</a></li>
@@ -23,10 +24,7 @@
     </nav>
 
     <main class="content">
-      <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Record Savings</div>
-      </header>
+      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Record Savings</div></header>
 
       <section>
         <h2>Record a Savings Entry</h2>
@@ -62,6 +60,8 @@
       renderSavingsManual();
       const d = document.getElementById('saveDate');
       if (d && !d.value) d.value = new Date().toISOString().slice(0,10);
+      const btn = document.getElementById('saveManualBtn');
+      if (btn) btn.addEventListener('click', saveManualSaving);
     });
   </script>
 </body>
