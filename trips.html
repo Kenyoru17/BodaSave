@@ -6,7 +6,6 @@
   <title>Trips · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* tiny local style to visually hide the credit customer block */
     .credit-block { display:none; margin-top:8px; }
     .credit-block.active { display:block; }
     .inline-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
@@ -19,7 +18,7 @@
       <ul>
         <li><a href="dashboard.html">🏠 Home</a></li>
         <li><a href="trips.html" class="active">🚦 Trips</a></li>
-        <li><a href="credits.html">💳 Credits</a></li>
+        <li><a href="credit.html">💳 Credit</a></li>
         <li><a href="expenses.html">💸 Expenses</a></li>
         <li><a href="savings.html">💰 Savings</a></li>
         <li><a href="goals.html">🎯 Goals</a></li>
@@ -50,13 +49,12 @@
             </select>
           </div>
 
-          <!-- credit-specific fields (customer info) -->
           <div id="creditBlock" class="credit-block">
             <div class="inline-grid">
               <div class="field"><label>Customer Name</label><input id="creditCustomer" type="text" placeholder="Customer name"></div>
               <div class="field"><label>Customer Phone</label><input id="creditPhone" type="tel" placeholder="Phone number"></div>
             </div>
-            <small style="display:block;margin-top:6px;color:#6b7280">Selecting Credit will create a credit record (unpaid) you can track in Credits.</small>
+            <small style="display:block;margin-top:6px;color:#6b7280">Selecting Credit will create an unpaid credit record you can track in Credit.</small>
           </div>
 
           <div class="field"><label>Notes</label><textarea id="tripNote" rows="2"></textarea></div>
@@ -74,25 +72,23 @@
 
   <script src="script.js"></script>
   <script>
-    // small UI toggle for credit fields; uses the IDs script.js expects (creditCustomer, creditPhone)
     document.addEventListener('DOMContentLoaded', ()=>{
-      // ensure auth + sidebar from shared script
       ensureAuth();
       initSidebar();
       renderTrips();
+
+      // wire payment toggle + save button
       const payment = document.getElementById('tripPayment');
       const block = document.getElementById('creditBlock');
-      if(payment && block){
-        function update(){
-          if(payment.value === 'Credit') block.classList.add('active');
-          else block.classList.remove('active');
-        }
-        payment.addEventListener('change', update);
-        update();
-      }
-      // default trip date to now
-      const d = document.getElementById('tripDate');
-      if (d && !d.value) d.value = new Date().toISOString().slice(0,16);
+      function updateCreditBlock(){ if(payment && block){ if(payment.value === 'Credit') block.classList.add('active'); else block.classList.remove('active'); } }
+      if(payment) payment.addEventListener('change', updateCreditBlock);
+      updateCreditBlock();
+
+      const now = new Date().toISOString().slice(0,16);
+      const dt = document.getElementById('tripDate'); if(dt && !dt.value) dt.value = now;
+
+      const saveBtn = document.getElementById('saveTripBtn');
+      if(saveBtn) saveBtn.addEventListener('click', saveTrip);
     });
   </script>
 </body>
