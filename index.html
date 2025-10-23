@@ -29,26 +29,26 @@
       color:#0f172a;
     }
 
-    .card {
-      width:370px;
+    .auth-card {
+      width:380px;
+      max-width:94%;
       background:var(--white);
-      border-radius:20px;
-      padding:40px 30px;
+      border-radius:16px;
+      padding:30px;
       box-shadow:0 12px 32px rgba(0,0,0,0.12);
       text-align:center;
-      transition:all .3s ease;
     }
 
     .brand h1 {
       margin:0;
       font-family:'Montserrat',sans-serif;
       font-weight:800;
-      font-size:42px;
+      font-size:40px;
       color:var(--green-700);
     }
 
-    .lead-quote {
-      margin:10px 0 18px;
+    .quote {
+      margin:10px 0 16px;
       color:#374151;
       font-size:14px;
       font-style:italic;
@@ -63,13 +63,12 @@
       font-size:15px;
       text-align:center;
       background:#f9fafb;
-      transition:border-color 0.2s, box-shadow 0.2s;
     }
 
     input:focus {
       outline:none;
       border-color:var(--green-600);
-      box-shadow:0 0 0 3px rgba(46,139,87,0.2);
+      box-shadow:0 0 0 3px rgba(46,139,87,0.12);
     }
 
     .btn {
@@ -78,59 +77,38 @@
       border:none;
       border-radius:10px;
       margin-top:12px;
-      font-weight:600;
+      font-weight:700;
       font-size:16px;
       cursor:pointer;
-      transition:background 0.3s ease;
     }
 
-    .btn.primary {
+    .primary {
       background:linear-gradient(180deg,var(--green-600),var(--green-700));
       color:white;
       box-shadow:0 6px 14px rgba(39,91,24,0.2);
     }
 
-    .btn.primary:hover {
-      background:linear-gradient(180deg,#308f5c,#236a42);
-    }
-
-    .btn.ghost {
+    .ghost {
       background:transparent;
-      border:1px solid #ccc;
+      border:1px solid #d1d5db;
       color:#111;
     }
 
-    .small-text {
-      margin-top:14px;
-      font-size:14px;
-      color:var(--muted);
-    }
-
-    .small-text a {
-      color:var(--green-700);
-      font-weight:600;
-      text-decoration:none;
-    }
-
-    .small-text a:hover {
-      text-decoration:underline;
-    }
-
+    .small-text { margin-top:12px; color:var(--muted); font-size:14px; }
+    .small-text a { color:var(--green-700); font-weight:700; text-decoration:none; }
     .hidden { display:none; }
 
     @media(max-width:420px){
-      .card { width:90%; padding:30px 20px; }
+      .auth-card { width:92%; padding:22px; }
       .brand h1 { font-size:36px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- LOGIN CARD -->
-  <div class="card" id="loginCard">
+  <div class="auth-card" id="loginCard">
     <div class="brand">
       <h1>BodaSave</h1>
-      <div class="lead-quote">"Every trip counts. Save a little, grow a lot."</div>
+      <div class="quote">"Every trip counts. Save a little, grow a lot."</div>
     </div>
 
     <input id="loginUsername" type="text" placeholder="Username" autocomplete="username">
@@ -140,11 +118,10 @@
     <div class="small-text">Don’t have an account? <a href="#" id="openSignup">Sign Up</a></div>
   </div>
 
-  <!-- SIGNUP CARD -->
-  <div class="card hidden" id="signupCard">
+  <div class="auth-card hidden" id="signupCard">
     <div class="brand">
       <h1>Create Account</h1>
-      <div class="lead-quote">Start saving today — one trip at a time.</div>
+      <div class="quote">Start saving today — one trip at a time.</div>
     </div>
 
     <input id="fullName" type="text" placeholder="Full name">
