@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Credit · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .paid-btn { cursor:pointer; color:green; font-weight:bold; background:none; border:none; font-size:16px; }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -24,21 +27,16 @@
     </nav>
 
     <main class="content">
-      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Credit Records</div></header>
+      <header class="topbar">
+        <button class="hamburger">&#9776;</button>
+        <div class="welcome">Credit Records</div>
+      </header>
 
       <section>
-        <h2>Outstanding Credits</h2>
+        <h2>All Credit Records</h2>
         <table>
           <thead>
-            <tr>
-              <th>Date</th>
-              <th>Customer</th>
-              <th>Phone</th>
-              <th>Trip Amount</th>
-              <th>Details</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
+            <tr><th>Date</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Trip Details</th><th>Status</th></tr>
           </thead>
           <tbody id="creditsBody"></tbody>
         </table>
@@ -48,7 +46,7 @@
 
   <script src="script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
+    document.addEventListener('DOMContentLoaded', () => {
       ensureAuth();
       initSidebar();
       renderCredits();
