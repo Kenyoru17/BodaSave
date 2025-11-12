@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Credit · BodaSave</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Credit · BodaSave</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app">
@@ -24,14 +24,12 @@
   </nav>
 
   <main class="content">
-    <header class="topbar"><div class="welcome">Credit Records</div></header>
+    <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Credit Records</div></header>
 
     <section>
-      <h2>Credits / Unpaid Trips</h2>
+      <h2>Outstanding Credits</h2>
       <table>
-        <thead>
-          <tr><th>Date</th><th>Customer</th><th>Phone</th><th>Trip Amount</th><th>Status</th></tr>
-        </thead>
+        <thead><tr><th>Date</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Status</th><th>Details</th></tr></thead>
         <tbody id="creditsBody"></tbody>
       </table>
     </section>
@@ -41,9 +39,7 @@
 <script src="script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
-  ensureAuth();
-  initSidebar();
-  renderCredits();
+  ensureAuth(); initSidebar(); renderCredits();
 });
 </script>
 </body>
