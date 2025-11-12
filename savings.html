@@ -24,14 +24,23 @@
   </nav>
 
   <main class="content">
-    <header class="topbar"><div class="welcome">Savings</div></header>
+    <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Record Savings</div></header>
 
     <section>
-      <h2>Saved Entries</h2>
+      <h2>Record a Savings Entry</h2>
+      <div class="form-compact">
+        <div class="field"><label>Date</label><input id="saveDate" type="date"></div>
+        <div class="field"><label>Amount</label><input id="saveAmount" type="number"></div>
+        <div class="field"><label>Goal</label>
+          <select id="saveGoalSelect"><option value="">-- Select a Goal --</option></select>
+        </div>
+        <div class="field"><label>Notes</label><textarea id="saveNote" rows="2"></textarea></div>
+        <div class="actions"><button id="saveManualBtn" class="btn primary">Save</button></div>
+      </div>
+
+      <h3>Saved Entries</h3>
       <table>
-        <thead>
-          <tr><th>Date</th><th>Amount</th><th>Goal</th><th>Note</th></tr>
-        </thead>
+        <thead><tr><th>Date</th><th>Amount</th><th>Goal</th><th>Notes</th></tr></thead>
         <tbody id="savingsManualBody"></tbody>
       </table>
     </section>
@@ -41,9 +50,9 @@
 <script src="script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
-  ensureAuth();
-  initSidebar();
-  renderSavingsManual();
+  ensureAuth(); initSidebar(); populateGoalsDropdown(); renderSavingsManual();
+  const d = document.getElementById('saveDate'); if(d&&!d.value)d.value=new Date().toISOString().slice(0,10);
+  const btn = document.getElementById('saveManualBtn'); if(btn) btn.addEventListener('click', saveManualSaving);
 });
 </script>
 </body>
