@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Credits · BodaSave</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Credit · BodaSave</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html">🏠 Home</a></li>
-        <li><a href="trips.html">🚦 Trips</a></li>
-        <li><a href="credit.html" class="active">💳 Credit</a></li>
-        <li><a href="expenses.html">💸 Expenses</a></li>
-        <li><a href="savings.html">💰 Savings</a></li>
-        <li><a href="goals.html">🎯 Goals</a></li>
-        <li><a href="reports.html">📊 Reports</a></li>
-        <li><a href="profile.html">👤 Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="small ghost">Logout</button>
-    </nav>
+<div class="app">
+  <nav class="sidebar">
+    <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+    <ul>
+      <li><a href="dashboard.html">🏠 Home</a></li>
+      <li><a href="trips.html">🚦 Trips</a></li>
+      <li><a href="credit.html" class="active">💳 Credit</a></li>
+      <li><a href="expenses.html">💸 Expenses</a></li>
+      <li><a href="savings.html">💰 Savings</a></li>
+      <li><a href="goals.html">🎯 Goals</a></li>
+      <li><a href="reports.html">📊 Reports</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+    </ul>
+    <button id="logoutBtn" class="small ghost">Logout</button>
+  </nav>
 
-    <main class="content">
-      <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Credit Records</div>
-      </header>
+  <main class="content">
+    <header class="topbar"><div class="welcome">Credit Records</div></header>
 
-      <section>
-        <h2>Credits (Unpaid / Paid)</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Customer</th>
-              <th>Phone</th>
-              <th>Trip Details</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="creditBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+    <section>
+      <h2>Credits / Unpaid Trips</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Customer</th><th>Phone</th><th>Trip Amount</th><th>Status</th></tr>
+        </thead>
+        <tbody id="creditsBody"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
 
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth();
-      initSidebar();
-      renderCredits();
-    });
-  </script>
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  ensureAuth();
+  initSidebar();
+  renderCredits();
+});
+</script>
 </body>
 </html>
