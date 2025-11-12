@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Trips · BodaSave</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <style>
     .credit-block { display:none; margin-top:8px; }
     .credit-block.active { display:block; }
@@ -12,84 +12,81 @@
   </style>
 </head>
 <body>
-  <div class="app">
-    <nav class="sidebar">
-      <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
-      <ul>
-        <li><a href="dashboard.html">🏠 Home</a></li>
-        <li><a href="trips.html" class="active">🚦 Trips</a></li>
-        <li><a href="credit.html">💳 Credit</a></li>
-        <li><a href="expenses.html">💸 Expenses</a></li>
-        <li><a href="savings.html">💰 Savings</a></li>
-        <li><a href="goals.html">🎯 Goals</a></li>
-        <li><a href="reports.html">📊 Reports</a></li>
-        <li><a href="profile.html">👤 Profile</a></li>
-      </ul>
-      <button id="logoutBtn" class="small ghost">Logout</button>
-    </nav>
+<div class="app">
+  <nav class="sidebar">
+    <div class="brand-mini"><h2>Boda<span>Save</span></h2></div>
+    <ul>
+      <li><a href="dashboard.html">🏠 Home</a></li>
+      <li><a href="trips.html" class="active">🚦 Trips</a></li>
+      <li><a href="credit.html">💳 Credit</a></li>
+      <li><a href="expenses.html">💸 Expenses</a></li>
+      <li><a href="savings.html">💰 Savings</a></li>
+      <li><a href="goals.html">🎯 Goals</a></li>
+      <li><a href="reports.html">📊 Reports</a></li>
+      <li><a href="profile.html">👤 Profile</a></li>
+    </ul>
+    <button id="logoutBtn" class="small ghost">Logout</button>
+  </nav>
 
-    <main class="content">
-      <header class="topbar">
-        <button class="hamburger">&#9776;</button>
-        <div class="welcome">Record a Trip</div>
-      </header>
+  <main class="content">
+    <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Record a Trip</div></header>
 
-      <section>
-        <h2>Record Trip Earnings</h2>
-        <div class="form-compact">
-          <div class="field"><label>Date & Time</label><input id="tripDate" type="datetime-local"></div>
-          <div class="field"><label>Amount Earned (KES)</label><input id="tripAmount" type="number" placeholder="e.g., 200"></div>
-          <div class="field"><label>Trip Details</label><input id="tripDetails" type="text" placeholder="Route or notes"></div>
-          <div class="field"><label>Payment Method</label>
-            <select id="tripPayment">
-              <option>Cash</option>
-              <option>M-Pesa</option>
-              <option>Credit</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          <div id="creditBlock" class="credit-block">
-            <div class="inline-grid">
-              <div class="field"><label>Customer Name</label><input id="creditCustomer" type="text" placeholder="Customer name"></div>
-              <div class="field"><label>Customer Phone</label><input id="creditPhone" type="tel" placeholder="Phone number"></div>
-            </div>
-            <small style="display:block;margin-top:6px;color:#6b7280">Selecting Credit will create an unpaid credit record you can track in Credit.</small>
-          </div>
-
-          <div class="field"><label>Notes</label><textarea id="tripNote" rows="2"></textarea></div>
-          <div class="actions"><button id="saveTripBtn" class="btn primary">Save Trip</button></div>
+    <section>
+      <h2>Record Trip Earnings</h2>
+      <div class="form-compact">
+        <div class="field"><label>Date & Time</label><input id="tripDate" type="datetime-local"></div>
+        <div class="field"><label>Amount (KES)</label><input id="tripAmount" type="number"></div>
+        <div class="field"><label>Trip Details</label><input id="tripDetails" type="text"></div>
+        <div class="field"><label>Payment Method</label>
+          <select id="tripPayment">
+            <option>Cash</option>
+            <option>M-Pesa</option>
+            <option>Credit</option>
+            <option>Other</option>
+          </select>
         </div>
 
-        <h3>Recent Trips</h3>
-        <table>
-          <thead><tr><th>Time</th><th>Amount</th><th>Details</th><th>Payment</th></tr></thead>
-          <tbody id="tripsBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+        <div id="creditBlock" class="credit-block">
+          <div class="inline-grid">
+            <div class="field"><label>Customer Name</label><input id="creditCustomer" type="text"></div>
+            <div class="field"><label>Customer Phone</label><input id="creditPhone" type="tel"></div>
+          </div>
+          <small>Credit trips will create an unpaid credit record.</small>
+        </div>
 
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      ensureAuth();
-      initSidebar();
-      renderTrips();
+        <div class="field"><label>Notes</label><textarea id="tripNote" rows="2"></textarea></div>
+        <div class="actions"><button id="saveTripBtn" class="btn primary">Save Trip</button></div>
+      </div>
 
-      // wire payment toggle + save button
-      const payment = document.getElementById('tripPayment');
-      const block = document.getElementById('creditBlock');
-      function updateCreditBlock(){ if(payment && block){ if(payment.value === 'Credit') block.classList.add('active'); else block.classList.remove('active'); } }
-      if(payment) payment.addEventListener('change', updateCreditBlock);
-      updateCreditBlock();
+      <h3>Recent Trips</h3>
+      <table>
+        <thead>
+          <tr><th>Time</th><th>Amount</th><th>Details</th><th>Payment</th></tr>
+        </thead>
+        <tbody id="tripsBody"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
 
-      const now = new Date().toISOString().slice(0,16);
-      const dt = document.getElementById('tripDate'); if(dt && !dt.value) dt.value = now;
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  ensureAuth();
+  initSidebar();
+  renderTrips();
 
-      const saveBtn = document.getElementById('saveTripBtn');
-      if(saveBtn) saveBtn.addEventListener('click', saveTrip);
-    });
-  </script>
+  const payment = document.getElementById('tripPayment');
+  const block = document.getElementById('creditBlock');
+  function updateCreditBlock(){ if(payment && block){ payment.value==='Credit'?block.classList.add('active'):block.classList.remove('active'); } }
+  if(payment) payment.addEventListener('change', updateCreditBlock);
+  updateCreditBlock();
+
+  const now = new Date().toISOString().slice(0,16);
+  const dt = document.getElementById('tripDate'); if(dt && !dt.value) dt.value = now;
+
+  const saveBtn = document.getElementById('saveTripBtn'); if(saveBtn) saveBtn.addEventListener('click', saveTrip);
+});
+</script>
 </body>
 </html>
