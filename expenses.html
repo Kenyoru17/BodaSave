@@ -24,14 +24,21 @@
   </nav>
 
   <main class="content">
-    <header class="topbar"><div class="welcome">Expenses</div></header>
+    <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Record Expenses</div></header>
 
     <section>
-      <h2>Expense Records</h2>
+      <h2>New Expense</h2>
+      <div class="form-compact">
+        <div class="field"><label>Date</label><input id="expenseDate" type="date"></div>
+        <div class="field"><label>Type</label><input id="expenseType" type="text"></div>
+        <div class="field"><label>Amount</label><input id="expenseAmount" type="number"></div>
+        <div class="field"><label>Notes</label><textarea id="expenseNote" rows="2"></textarea></div>
+        <div class="actions"><button id="saveExpenseBtn" class="btn primary">Save Expense</button></div>
+      </div>
+
+      <h3>Recent Expenses</h3>
       <table>
-        <thead>
-          <tr><th>Date</th><th>Type</th><th>Amount</th><th>Note</th></tr>
-        </thead>
+        <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Notes</th></tr></thead>
         <tbody id="expensesBody"></tbody>
       </table>
     </section>
@@ -41,9 +48,8 @@
 <script src="script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
-  ensureAuth();
-  initSidebar();
-  renderExpenses();
+  ensureAuth(); initSidebar(); renderExpenses();
+  const btn = document.getElementById('saveExpenseBtn'); if(btn) btn.addEventListener('click', saveExpense);
 });
 </script>
 </body>
