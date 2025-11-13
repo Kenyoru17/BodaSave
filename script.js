@@ -135,8 +135,3 @@ function downloadCSV() {
   link.click();
   document.body.removeChild(link);
 }
-
-// ---------------- AUTO INIT ----------------
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("loginCard")) initAuthPage();
-});
