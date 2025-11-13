@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Reports</title>
+  <title>Reports · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -24,23 +24,15 @@
     </nav>
 
     <main class="content">
-      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Reports & Insights</div></header>
+      <header class="topbar">
+        <button class="hamburger">&#9776;</button>
+        <div class="welcome">Reports & Exports</div>
+      </header>
 
       <section>
-        <h2>Summary Overview</h2>
-        <p><strong>Total Earned:</strong> KES <span id="reportEarned">0</span></p>
-        <p><strong>Total Spent:</strong> KES <span id="reportSpent">0</span></p>
-        <p><strong>Total Saved:</strong> KES <span id="reportSaved">0</span></p>
-
-        <h3>Recent Records</h3>
-        <table>
-          <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Details</th></tr></thead>
-          <tbody id="reportBody"></tbody>
-        </table>
-
-        <div class="actions" style="margin-top:16px;">
-          <button class="btn primary" id="downloadReportBtn">📥 Download Report (CSV)</button>
-        </div>
+        <h2>Download Your Data</h2>
+        <p>Export all your recorded data (Trips, Expenses, Credits, and Savings) as a CSV file for backup or analysis.</p>
+        <button id="downloadCSVBtn" class="btn primary">⬇️ Download CSV</button>
       </section>
     </main>
   </div>
@@ -50,9 +42,8 @@
     document.addEventListener('DOMContentLoaded', ()=>{
       ensureAuth();
       initSidebar();
-      renderReports();
-      const dl = document.getElementById('downloadReportBtn');
-      if (dl) dl.addEventListener('click', exportCSV);
+      const btn = document.getElementById('downloadCSVBtn');
+      if (btn) btn.addEventListener('click', downloadCSV);
     });
   </script>
 </body>
