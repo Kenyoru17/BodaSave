@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BodaSave · Profile</title>
+  <title>Profile · BodaSave</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -24,20 +24,23 @@
     </nav>
 
     <main class="content">
-      <header class="topbar"><button class="hamburger">&#9776;</button><div class="welcome">Profile & Settings</div></header>
+      <header class="topbar">
+        <button class="hamburger">&#9776;</button>
+        <div class="welcome">Your Profile</div>
+      </header>
 
       <section>
-        <h2>Your Profile</h2>
-        <p><strong>Name:</strong> <span id="profileName"></span></p>
-        <p><strong>Username:</strong> <span id="profileUser"></span></p>
-        <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
-        <p><strong>Stage/Sacco:</strong> <span id="profileStage"></span></p>
-        <p><strong>Date Joined:</strong> <span id="profileJoined"></span></p>
+        <h2>Account Details</h2>
+        <div id="profileInfo">
+          <p><strong>Name:</strong> <span id="profileName"></span></p>
+          <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+          <p><strong>Registered On:</strong> <span id="profileDate"></span></p>
+        </div>
 
-        <h3>Export / Manage Data</h3>
-        <div class="actions">
-          <button id="exportCsv" class="btn primary">Export data as CSV</button>
-          <button id="clearData" class="btn ghost">Clear all my data</button>
+        <h3>Change Password</h3>
+        <div class="form-compact">
+          <div class="field"><label>New Password</label><input id="newPass" type="password"></div>
+          <button id="changePassBtn" class="btn primary">Update Password</button>
         </div>
       </section>
     </main>
@@ -48,11 +51,9 @@
     document.addEventListener('DOMContentLoaded', ()=>{
       ensureAuth();
       initSidebar();
-      renderProfile();
-      const exportBtn = document.getElementById('exportCsv');
-      if (exportBtn) exportBtn.addEventListener('click', exportCSV);
-      const clearBtn = document.getElementById('clearData');
-      if (clearBtn) clearBtn.addEventListener('click', clearUserData);
+      loadProfile();
+      const btn = document.getElementById('changePassBtn');
+      if (btn) btn.addEventListener('click', updatePassword);
     });
   </script>
 </body>
