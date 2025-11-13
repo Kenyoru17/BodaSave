@@ -285,7 +285,58 @@ function renderDashboardPage() {
   if(lastTripEl) lastTripEl.textContent = lastTrip ? `You earned KES ${lastTrip.amount.toFixed(2)} on your last trip.` : "No trips recorded yet.";
 }
 
+// ---------------- PROFILE ----------------
+function loadProfile() {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const profileName = document.getElementById("profileName");
+  const profileUser = document.getElementById("profileUser");
+  const profilePhone = document.getElementById("profilePhone");
+  const profileStage = document.getElementById("profileStage");
+  const profileJoined = document.getElementById("profileJoined");
+
+  if (profileName) profileName.textContent = user.fullName || "";
+  if (profileUser) profileUser.textContent = user.username || "";
+  if (profilePhone) profilePhone.textContent = user.phone || "N/A";
+  if (profileStage) profileStage.textContent = user.stage || "N/A";
+  if (profileJoined) profileJoined.textContent = user.dateJoined || "N/A";
+}
+
+// ---------------- REPORTS CSV ----------------
+function downloadReportCSV() {
+  const user = getCurrentUser();
+  if (!user) return alert("Please log in.");
+
+  let csv = "Category,Date,Details,Amount,Extra\n";
+
+  (user.trips || []).forEach(t => {
+    csv += `Trip,${t.date},${t.details || ""},${t.amount || 0},${t.payment}\n`;
+  });
+  (user.expenses || []).forEach(e => {
+    csv += `Expense,${e.date},${e.type || ""},${e.amount || 0},${e.note || ""}\n`;
+  });
+  (user.savings || []).forEach(s => {
+    csv += `Saving,${s.date},${s.goal || ""},${s.amount || 0},${s.note || ""}\n`;
+  });
+  (user.credits || []).forEach(c => {
+    csv += `Credit,${c.date},${c.customer || ""},${c.amount || 0},${c.status || ""}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `BodaSave_Report_${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
 // ---------------- AUTO INIT ----------------
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("loginCard")) initAuthPage();
+  if (document.getElementById("downloadCSVBtn")) {
+    document.getElementById("downloadCSVBtn").addEventListener("click", downloadReportCSV);
+  }
+  if (document.getElementById("profileName")) loadProfile();
 });
