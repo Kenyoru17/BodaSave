@@ -87,256 +87,56 @@ function initSidebar() {
   if (user) document.querySelectorAll("#userName").forEach(el => el.textContent = user.fullName);
 }
 
-// ---------------- TRIPS ----------------
-function saveTrip() {
-  const user = getCurrentUser(); if (!user) return alert("User not found."); ensureUserArrays(user);
-  const date = document.getElementById("tripDate").value;
-  const amount = parseFloat(document.getElementById("tripAmount").value || "0");
-  const details = document.getElementById("tripDetails").value.trim();
-  const payment = document.getElementById("tripPayment").value;
-  const note = document.getElementById("tripNote").value.trim();
-  if (!date || !amount) return alert("Please fill date and amount.");
-
-  const tripId = Date.now();
-  const trip = { id: tripId, date, amount, details, payment, note };
-  user.trips.push(trip);
-
-  if (payment.toLowerCase() === "credit") {
-    const customer = document.getElementById("creditCustomer").value.trim() || "Unknown";
-    const phone = document.getElementById("creditPhone").value.trim() || "N/A";
-    user.credits.push({
-      id: Date.now() + Math.floor(Math.random() * 999),
-      tripId: tripId, customer, phone, details, amount, date, status: "Unpaid"
-    });
-  }
-
-  updateCurrentUser(user);
-  renderTrips(); renderDashboardPage(); renderCredits();
-  alert("Trip saved successfully.");
-}
-
-function renderTrips() {
-  const user = getCurrentUser(); if (!user) return;
-  const body = document.getElementById("tripsBody"); if (!body) return;
-  body.innerHTML = "";
-  user.trips.slice().reverse().forEach(t => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${t.date}</td><td>KES ${t.amount.toFixed(2)}</td><td>${t.details}</td><td>${t.payment}</td>`;
-    body.appendChild(tr);
-  });
-}
-
-// ---------------- EXPENSES ----------------
-function saveExpense() {
-  const user = getCurrentUser(); if (!user) return alert("User not found."); ensureUserArrays(user);
-  const date = document.getElementById("expenseDate").value;
-  const type = document.getElementById("expenseType").value;
-  const amount = parseFloat(document.getElementById("expenseAmount").value || "0");
-  const note = document.getElementById("expenseNote").value;
-  if (!date || !amount) return alert("Please fill date and amount.");
-  user.expenses.push({ id: Date.now(), date, type, amount, note });
-  updateCurrentUser(user);
-  renderExpenses(); renderDashboardPage();
-  alert("Expense saved.");
-}
-
-function renderExpenses() {
-  const user = getCurrentUser(); if (!user) return;
-  const body = document.getElementById("expensesBody"); if (!body) return;
-  body.innerHTML = "";
-  user.expenses.slice().reverse().forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${e.date}</td><td>${e.type}</td><td>KES ${e.amount.toFixed(2)}</td><td>${e.note}</td>`;
-    body.appendChild(tr);
-  });
-}
-
-// ---------------- GOALS ----------------
-function saveGoal() {
-  const user = getCurrentUser(); if (!user) return alert("User not found."); ensureUserArrays(user);
-  const name = document.getElementById("goalName").value.trim();
-  const target = parseFloat(document.getElementById("goalTarget").value || "0");
-  const end = document.getElementById("goalEnd").value;
-  const priority = document.getElementById("goalPriority").value;
-  if (!name || !target) return alert("Please fill all details.");
-  user.goals.push({ id: Date.now(), name, target, end, priority });
-  updateCurrentUser(user);
-  renderGoals(); renderDashboardPage(); populateGoalsDropdown();
-  alert("Goal saved.");
-}
-
-function renderGoals() {
-  const user = getCurrentUser(); if (!user) return;
-  const body = document.getElementById("goalsBody"); if (!body) return;
-  body.innerHTML = "";
-  user.goals.slice().reverse().forEach(g => {
-    const totalSaved = user.savings.filter(s => s.goal === g.name).reduce((sum, s) => sum + s.amount, 0);
-    const progress = Math.min(100, Math.round((totalSaved / g.target) * 100));
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${g.name}</td><td>KES ${g.target.toFixed(2)}</td><td>${progress}%</td><td>${progress >= 100 ? "Completed" : "Ongoing"}</td>`;
-    body.appendChild(tr);
-  });
-}
-
-// ---------------- SAVINGS ----------------
-function populateGoalsDropdown() {
-  const user = getCurrentUser(); if (!user) return;
-  const select = document.getElementById("saveGoalSelect"); if (!select) return;
-  select.innerHTML = `<option value="">-- Select a Goal --</option>`;
-  user.goals.forEach(g => {
-    const opt = document.createElement("option");
-    opt.value = g.name;
-    opt.textContent = g.name;
-    select.appendChild(opt);
-  });
-}
-
-function saveManualSaving() {
-  const user = getCurrentUser(); if (!user) return alert("User not found."); ensureUserArrays(user);
-  const date = document.getElementById("saveDate").value;
-  const amount = parseFloat(document.getElementById("saveAmount").value || "0");
-  const goal = document.getElementById("saveGoalSelect").value;
-  const note = document.getElementById("saveNote").value;
-  if (!date || !amount) return alert("Please fill date and amount.");
-  user.savings.push({ id: Date.now(), date, amount, goal, note });
-  updateCurrentUser(user);
-  renderSavingsManual(); renderGoals(); renderDashboardPage();
-  alert("Saved.");
-}
-
-function renderSavingsManual() {
-  const user = getCurrentUser(); if (!user) return;
-  const body = document.getElementById("savingsManualBody"); if (!body) return;
-  body.innerHTML = "";
-  user.savings.slice().reverse().forEach(s => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${s.date}</td><td>KES ${s.amount.toFixed(2)}</td><td>${s.goal || ""}</td><td>${s.note}</td>`;
-    body.appendChild(tr);
-  });
-}
-
-// ---------------- CREDITS ----------------
-function renderCredits() {
-  const user = getCurrentUser(); if (!user) return;
-  ensureUserArrays(user);
-  const body = document.getElementById("creditsBody"); if (!body) return;
-  body.innerHTML = "";
-  user.credits.slice().reverse().forEach(c => {
-    const tr = document.createElement("tr");
-    let actionHtml = '';
-    if (c.status === "Unpaid") {
-      actionHtml = `<button class="btn small" onclick="markCreditPaid(${c.id})">✔️</button> <button class="btn small" disabled>❌</button>`;
-    } else {
-      actionHtml = `Paid`;
-    }
-    tr.innerHTML = `
-      <td>${c.date}</td>
-      <td>${c.customer}</td>
-      <td>${c.phone}</td>
-      <td>${c.details}</td>
-      <td>KES ${c.amount.toFixed(2)}</td>
-      <td>${c.status}</td>
-      <td>${actionHtml}</td>
-    `;
-    body.appendChild(tr);
-  });
-}
-
-function markCreditPaid(creditId) {
-  const user = getCurrentUser(); if (!user) return;
-  const credit = user.credits.find(c => c.id === creditId);
-  if (!credit) return alert("Credit record not found.");
-  credit.status = "Paid";
-  updateCurrentUser(user);
-  renderCredits();
-}
-
-// ---------------- DASHBOARD ----------------
-function renderDashboardPage() {
-  const user = getCurrentUser(); if (!user) return;
-  const today = new Date().toLocaleDateString();
-  const tripsToday = user.trips.filter(t => new Date(t.date).toLocaleDateString() === today);
-  const expensesToday = user.expenses.filter(e => new Date(e.date).toLocaleDateString() === today);
-  const savingsToday = user.savings.filter(s => new Date(s.date).toLocaleDateString() === today);
-  const earn = tripsToday.reduce((s, t) => s + t.amount, 0);
-  const spend = expensesToday.reduce((s, e) => s + e.amount, 0);
-  const save = savingsToday.reduce((s, v) => s + v.amount, 0);
-  const net = earn - spend - save;
-
-  const earnEl = document.getElementById("earnToday");
-  const expEl = document.getElementById("expToday");
-  const netEl = document.getElementById("netToday");
-  if(earnEl) earnEl.textContent = `KES ${earn.toFixed(2)}`;
-  if(expEl) expEl.textContent = `KES ${spend.toFixed(2)}`;
-  if(netEl) netEl.textContent = `KES ${net.toFixed(2)}`;
-
-  const currentGoal = user.goals[0] || { target: 0 };
-  const totalSaved = user.savings.reduce((s, v) => s + v.amount, 0);
-  const pct = currentGoal.target ? Math.min(100, Math.round((totalSaved / currentGoal.target) * 100)) : 0;
-  const fillEl = document.getElementById("progressFill");
-  const percEl = document.getElementById("progressPercent");
-  const goalEl = document.getElementById("currentGoal");
-  if(fillEl) fillEl.style.width = `${pct}%`;
-  if(percEl) percEl.textContent = `${pct}%`;
-  if(goalEl) goalEl.textContent = currentGoal.target.toFixed(2);
-
-  const lastTrip = user.trips.at(-1);
-  const lastTripEl = document.getElementById("lastTrip");
-  if(lastTripEl) lastTripEl.textContent = lastTrip ? `You earned KES ${lastTrip.amount.toFixed(2)} on your last trip.` : "No trips recorded yet.";
-}
-
 // ---------------- PROFILE ----------------
 function loadProfile() {
-  const user = getCurrentUser();
-  if (!user) return;
-
-  const profileName = document.getElementById("profileName");
-  const profileUser = document.getElementById("profileUser");
-  const profilePhone = document.getElementById("profilePhone");
-  const profileStage = document.getElementById("profileStage");
-  const profileJoined = document.getElementById("profileJoined");
-
-  if (profileName) profileName.textContent = user.fullName || "";
-  if (profileUser) profileUser.textContent = user.username || "";
-  if (profilePhone) profilePhone.textContent = user.phone || "N/A";
-  if (profileStage) profileStage.textContent = user.stage || "N/A";
-  if (profileJoined) profileJoined.textContent = user.dateJoined || "N/A";
+  const user = getCurrentUser(); if (!user) return;
+  document.getElementById("profileName").textContent = user.fullName || "";
+  document.getElementById("profileEmail").textContent = user.username || "";
+  document.getElementById("profileDate").textContent = user.dateJoined || "";
 }
 
-// ---------------- REPORTS CSV ----------------
-function downloadReportCSV() {
-  const user = getCurrentUser();
-  if (!user) return alert("Please log in.");
+function updatePassword() {
+  const user = getCurrentUser(); if (!user) return alert("User not found.");
+  const newPass = document.getElementById("newPass").value.trim();
+  if (!newPass) return alert("Please enter a new password.");
+  user.password = newPass;
+  updateCurrentUser(user);
+  alert("Password updated successfully!");
+  document.getElementById("newPass").value = "";
+}
 
-  let csv = "Category,Date,Details,Amount,Extra\n";
+// ---------------- CSV DOWNLOAD (REPORTS) ----------------
+function downloadCSV() {
+  const user = getCurrentUser(); if (!user) return alert("User not found.");
+  ensureUserArrays(user);
+  const rows = [];
+  
+  function addSection(title, data, headers) {
+    rows.push([title]);
+    rows.push(headers);
+    data.forEach(item => {
+      const row = headers.map(h => item[h] !== undefined ? item[h] : "");
+      rows.push(row);
+    });
+    rows.push([]); // empty row for spacing
+  }
 
-  (user.trips || []).forEach(t => {
-    csv += `Trip,${t.date},${t.details || ""},${t.amount || 0},${t.payment}\n`;
-  });
-  (user.expenses || []).forEach(e => {
-    csv += `Expense,${e.date},${e.type || ""},${e.amount || 0},${e.note || ""}\n`;
-  });
-  (user.savings || []).forEach(s => {
-    csv += `Saving,${s.date},${s.goal || ""},${s.amount || 0},${s.note || ""}\n`;
-  });
-  (user.credits || []).forEach(c => {
-    csv += `Credit,${c.date},${c.customer || ""},${c.amount || 0},${c.status || ""}\n`;
-  });
+  addSection("Trips", user.trips, ["date","amount","details","payment","note"]);
+  addSection("Expenses", user.expenses, ["date","type","amount","note"]);
+  addSection("Credits", user.credits, ["date","customer","phone","details","amount","status"]);
+  addSection("Savings", user.savings, ["date","amount","goal","note"]);
 
-  const blob = new Blob([csv], { type: "text/csv" });
+  const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+  const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `BodaSave_Report_${new Date().toISOString().slice(0,10)}.csv`;
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "bodaSave_data.csv");
   document.body.appendChild(link);
   link.click();
-  link.remove();
+  document.body.removeChild(link);
 }
 
 // ---------------- AUTO INIT ----------------
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("loginCard")) initAuthPage();
-  if (document.getElementById("downloadCSVBtn")) {
-    document.getElementById("downloadCSVBtn").addEventListener("click", downloadReportCSV);
-  }
-  if (document.getElementById("profileName")) loadProfile();
 });
